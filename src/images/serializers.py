@@ -5,6 +5,7 @@ from .models import Image
 
 class ImageSerializer(serializers.ModelSerializer):
     is_fan = serializers.SerializerMethodField()
+    is_report = serializers.SerializerMethodField()
     class Meta:
         model = Image
         fields = (
@@ -12,11 +13,19 @@ class ImageSerializer(serializers.ModelSerializer):
             'picture',
             'body',
             'is_fan',
-            'total_likes'
+            'is_report',
+            'total_likes',
+            'total_reports',
         )
 
     def get_is_fan(self, obj) -> bool:
-        """Проверяет, лайкнул ли `request.user` твит (`obj`).
+        """Проверяет, лайкнул ли `request.user` картинку (`obj`).
         """
         user = self.context.get('request').user
         return likes_services.is_fan(obj, user)
+
+    def get_is_report(self, obj) -> bool:
+        """Проверяет, сделал ли `request.user` репорт картинки (`obj`).
+        """
+        user = self.context.get('request').user
+        return likes_services.is_report(obj, user)

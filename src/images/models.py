@@ -1,6 +1,6 @@
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
-from likes.models import Like
+from likes.models import Like, Report
 
 class Image(models.Model):
     picture = models.ImageField(
@@ -13,6 +13,7 @@ class Image(models.Model):
     )
 
     likes = GenericRelation(Like)
+    reports = GenericRelation(Report)
 
     def __str__(self):
         return self.body
@@ -20,6 +21,10 @@ class Image(models.Model):
     @property
     def total_likes(self):
         return self.likes.count()
+
+    @property
+    def total_reports(self):
+        return self.reports.count()
     
     class Meta:
         verbose_name="Image"
