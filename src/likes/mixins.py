@@ -21,7 +21,7 @@ class LikedMixin:
         services.remove_like(obj, request.user)
         return Response()
 
-    @action(detail=True, methods=['POST', 'GET'])
+    @action(detail=True, methods=['GET'])
     def fans(self, request, pk=None):
         """Получает всех пользователей, которые лайкнули `obj`.
         """
@@ -47,7 +47,7 @@ class ReportedMixin:
         services.remove_report(obj, request.user)
         return Response()
 
-    @action(detail=True, methods=['POST', 'GET'])
+    @action(detail=True, methods=['GET'])
     def reports(self, request, pk=None):
         """Получает всех пользователей, которые сделали репорт `obj`.
         """
